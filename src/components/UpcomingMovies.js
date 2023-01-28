@@ -40,6 +40,7 @@ function SkeletonChildrenDemo(props) {
         </Box>
         
         <Image   
+            sx={{maxHeight:'100%',maxWidth:'100%;'}}
             src={"https://image.tmdb.org/t/p/w500"+props.data.poster_path}
             alt=""
         />

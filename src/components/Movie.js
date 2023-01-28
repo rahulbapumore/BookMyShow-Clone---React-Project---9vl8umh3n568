@@ -21,10 +21,10 @@ const Movie = () => {
     },[]);
 return (
     <Box sx={{height: '600px' }}>
-    <Box sx={{ height: '500px' , background: `linear-gradient(rgba(255,255,255,.4), rgba(255,255,255,.4)), url(https://image.tmdb.org/t/p/w500/${movie.backdrop_path})`
+    <Box sx={{ height: '500px' ,objectFit: 'cover', background: `linear-gradient(rgba(255,255,255,.4), rgba(255,255,255,.4)), url(https://image.tmdb.org/t/p/w500/${movie.backdrop_path})`
 , backgroundSize: '100%',backgroundClip: 'border-box', padding: 1 }} >
     <Grid container sx={{ display: 'flex',justifyContent: 'flex-flow',margin:6,rowGap: 15 }}>
-        <Box sx={{height: '450px' ,width: '400px' }}>
+        <Box>
         
             <Grid item  >
                 <SkeletonChildrenDemo  data={movie} />
