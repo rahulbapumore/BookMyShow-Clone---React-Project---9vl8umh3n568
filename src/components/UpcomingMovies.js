@@ -30,30 +30,30 @@ function SkeletonChildrenDemo(props) {
     <div>
         
       <Box sx={{ display: 'flex',flexDirection: 'column',justifyContent: 'space-around' ,margin: 2 ,width: "300px",height: "380px"}}>
-        <Box sx={{ display: 'flex',alignItems: 'center', margin: 1 }}>
+        {(!(props.data?.show))?<Box sx={{ display: 'flex',alignItems: 'center', margin: 1 }}>
             <Box sx={{ margin: 1 }}>
                 <Avatar src={"https://image.tmdb.org/t/p/w500"+props.data.poster_path} />
             </Box>
             <Box sx={{ width: '100%' }}>
                 <Typography><strong>{props.data.title}</strong></Typography>
             </Box>
-        </Box>
-        
+        </Box>:""
+        }
         <Image   
             sx={{maxHeight:'100%',maxWidth:'100%;'}}
             src={"https://image.tmdb.org/t/p/w500"+props.data.poster_path}
             alt=""
         />
         
-        <Box sx={{  }}>
+        {(!(props.data?.show))?<Box sx={{  }}>
             <Box sx={{ margin: 1 }}>
         
             <StarIcon /> {props.data.vote_average}/10
             </Box>
-        { props.data.genre_ids? <Box sx={{ width: '100%' , overflow: 'hidden' }}>
-            <Typography>{props.data.genre_ids.map((id)=> genreobj[id]).join('/')}</Typography>
-        </Box>:null}
+            <Box sx={{ width: '100%' , overflow: 'hidden' }}>
+            {/* <Typography>{props.data.genre_ids.map((id)=> genreobj[id]).join('/')}</Typography> */}
         </Box>
+        </Box>:""}
 
         
       </Box>

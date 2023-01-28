@@ -14,8 +14,12 @@ const Movie = () => {
     const [movie,setMovie] = useState({});
     React.useEffect(()=>{
         axios.get(`https://api.themoviedb.org/3/movie/${movie_id}?api_key=6180a45f8f909138bfb07757c25c1dc4&language=en-US`).then((response)=>{
-            setMovie(response.data);
-            console.log(response.data);
+              
+            let temp = response.data
+        temp.show = true
+        console.log(temp);  
+            setMovie(temp);
+            
         });
         
     },[]);
@@ -31,7 +35,7 @@ return (
             </Grid>
         </Box>
         <Box >
-        
+            
 
         </Box>
     </Grid>
