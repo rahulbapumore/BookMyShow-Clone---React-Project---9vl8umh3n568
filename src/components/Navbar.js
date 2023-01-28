@@ -59,7 +59,10 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 
 
 export default function SearchAppBar() {
-
+    const navigate = useNavigate()
+    const goToAbout = () => {
+        navigate("");
+    }
   return (
     
 
@@ -73,7 +76,7 @@ export default function SearchAppBar() {
             noWrap
             component="div"
             sx={{ flexGrow: 1, display: { xs: 'none', sm: 'block' } }}
-            
+            onClick={goToAbout}
           >
            BookMyShow
           </Typography>
