@@ -8,6 +8,7 @@ import Grid from '@mui/material/Grid';
 import Skeleton from '@mui/material/Skeleton';
 import StarIcon from '@mui/icons-material/Star';
 import axios from 'axios';
+import {useNavigate} from 'react-router-dom';
 const Image = styled('img')({
   width: '100%',
   height: '100%',
@@ -26,7 +27,7 @@ axios.get('https://api.themoviedb.org/3/genre/movie/list?api_key=6180a45f8f90913
 function SkeletonChildrenDemo(props) {
 
   return (
-    <div >
+    <div>
         
       <Box sx={{ display: 'flex',flexDirection: 'column',justifyContent: 'space-around' ,margin: 2 ,width: "300px",height: "380px"}}>
         <Box sx={{ display: 'flex',alignItems: 'center', margin: 1 }}>
@@ -39,7 +40,6 @@ function SkeletonChildrenDemo(props) {
         </Box>
         
         <Image   
-            
             src={"https://image.tmdb.org/t/p/w500"+props.data.poster_path}
             alt=""
         />
@@ -49,9 +49,9 @@ function SkeletonChildrenDemo(props) {
         
             <StarIcon /> {props.data.vote_average}/10
             </Box>
-        <Box sx={{ width: '100%' , overflow: 'hidden' }}>
+        { props.data.genre_ids? <Box sx={{ width: '100%' , overflow: 'hidden' }}>
             <Typography>{props.data.genre_ids.map((id)=> genreobj[id]).join('/')}</Typography>
-        </Box>
+        </Box>:null}
         </Box>
 
         
@@ -62,7 +62,11 @@ function SkeletonChildrenDemo(props) {
 
 export default function SkeletonChildren() {
     const [movies,setMovies] = React.useState([]);
-
+    const navigate = useNavigate()
+    
+    const onClickCard = (arg) => {
+        navigate(`/movie/${arg.id}`,{state: arg});
+      }
     React.useEffect(()=>{
         axios.get('https://api.themoviedb.org/3/movie/upcoming?api_key=6180a45f8f909138bfb07757c25c1dc4&language=en-US&page=1').then((response)=>{
             setMovies(response.data.results);
@@ -76,7 +80,7 @@ export default function SkeletonChildren() {
         <Grid container sx={{ display: 'flex',justifyContent: 'flex-flow',margin:6,rowGap: 15}}>
         {
             movies.map((mov,ind)=>{
-                return (<Grid item key={ind} >
+                return (<Grid item key={ind} onClick={() => onClickCard(mov)}>
                          <SkeletonChildrenDemo  data={mov}/>
                       </Grid>)
             })   
@@ -85,3 +89,4 @@ export default function SkeletonChildren() {
     </>
   );
 }
+export {SkeletonChildrenDemo};

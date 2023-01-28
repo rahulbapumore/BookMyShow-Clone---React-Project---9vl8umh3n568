@@ -9,7 +9,11 @@ import InputBase from '@mui/material/InputBase';
 import MenuIcon from '@mui/icons-material/Menu';
 import SearchIcon from '@mui/icons-material/Search';
 import MovieIcon from '@mui/icons-material/Movie';
-
+import { createBrowserRouter } from "react-router-dom";
+import { Link } from "react-router-dom";
+import App from "./App";
+import About from "./About";
+import { RouterProvider, useNavigate } from "react-router-dom";
 const Search = styled('div')(({ theme }) => ({
   position: 'relative',
   borderRadius: theme.shape.borderRadius,
@@ -52,8 +56,14 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
   },
 }));
 
+
+
 export default function SearchAppBar() {
+
   return (
+    
+
+<>
     <Box sx={{ flexGrow: 1 }}>
       <AppBar position="static" sx={{backgroundColor: '#333'}}>
         <Toolbar>
@@ -63,9 +73,11 @@ export default function SearchAppBar() {
             noWrap
             component="div"
             sx={{ flexGrow: 1, display: { xs: 'none', sm: 'block' } }}
+            
           >
-            BookMyShow
+           BookMyShow
           </Typography>
+          
           <Search>
             <SearchIconWrapper>
               <SearchIcon />
@@ -77,6 +89,7 @@ export default function SearchAppBar() {
           </Search>
         </Toolbar>
       </AppBar>
-    </Box>
+      </Box>
+   </>
   );
 }

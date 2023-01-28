@@ -7,7 +7,7 @@ const App = () => {
 
   return (
     <div id="main">
-      <Navbar />
+      
       <UpcomingMovies />
     </div>
   )
