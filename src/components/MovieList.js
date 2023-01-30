@@ -50,9 +50,9 @@ function SkeletonChildrenDemo(props) {
         
             <StarIcon /> {props.data.vote_average}/10
             </Box>
-            <Box sx={{ width: '100%' , overflow: 'hidden' }}>
-            {/* <Typography>{props.data.genre_ids.map((id)=> genreobj[id]).join('/')}</Typography> */}
-        </Box>
+            { props.data.genre_ids? <Box sx={{ width: '100%' , overflow: 'hidden' }}>
+            <Typography>{props.data.genre_ids.map((id)=> genreobj[id]).join('/')}</Typography>
+        </Box>:""}
         </Box>:""}
 
         
@@ -61,7 +61,7 @@ function SkeletonChildrenDemo(props) {
   );
 }
 
-export default function SkeletonChildren() {
+export default function MovieList(props) {
     const [movies,setMovies] = React.useState([]);
     const navigate = useNavigate()
     
@@ -69,15 +69,17 @@ export default function SkeletonChildren() {
         navigate(`/movie/${arg.id}`,{state: arg});
       }
     React.useEffect(()=>{
-        axios.get('https://api.themoviedb.org/3/movie/upcoming?api_key=6180a45f8f909138bfb07757c25c1dc4&language=en-US&page=1').then((response)=>{
+        axios.get(props.which).then((response)=>{
             setMovies(response.data.results);
         });
         
     },[]);
 
   return (
-      <>
-        <div><h2>Upcoming Movie</h2></div>
+    <>
+    <Box sx={{ margin: 10 }}>
+      <div><h2>{props.type}</h2></div>
+    </Box>
         <Grid container sx={{ display: 'flex',justifyContent: 'flex-flow',margin:6,rowGap: 15}}>
         {
             movies.map((mov,ind)=>{

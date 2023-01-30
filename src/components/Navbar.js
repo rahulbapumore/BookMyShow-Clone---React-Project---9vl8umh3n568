@@ -9,6 +9,7 @@ import InputBase from '@mui/material/InputBase';
 import MenuIcon from '@mui/icons-material/Menu';
 import SearchIcon from '@mui/icons-material/Search';
 import MovieIcon from '@mui/icons-material/Movie';
+import Button from '@mui/material/Button';
 import { createBrowserRouter } from "react-router-dom";
 import { Link } from "react-router-dom";
 import App from "./App";
@@ -59,9 +60,13 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 
 
 export default function SearchAppBar() {
-    const navigate = useNavigate()
+    const navigate = useNavigate();
+    const [login,setLogin] = React.useState(true);
     const goToAbout = () => {
         navigate("");
+    }
+    const changeLogin = () => {
+      navigate("/login");
     }
   return (
     
@@ -90,6 +95,7 @@ export default function SearchAppBar() {
               inputProps={{ 'aria-label': 'search' }}
             />
           </Search>
+          <Button variant="outlined" onClick={changeLogin}>{login?"Login":"Logout"}</Button>
         </Toolbar>
       </AppBar>
       </Box>
