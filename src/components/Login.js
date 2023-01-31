@@ -1,13 +1,16 @@
 import React, { useState } from 'react';
 
-import {Form,Link} from 'react-router-dom';
+import {Form,Link,useNavigate} from 'react-router-dom';
+import {auth} from './Database'
+import {  signInWithEmailAndPassword } from "firebase/auth";
+
 
 
 const Login = () => {
 
     const [email,setEmail] = useState("");
     const [pass,setPass] = useState("");
-    
+    const navigate = useNavigate();
     function changeEmail(e)
     {
         setEmail(e.target.value);
@@ -22,7 +25,19 @@ const Login = () => {
     const onLogin = (e) =>
     {
         e.preventDefault();
-        console.log("Hi");
+
+        
+
+        
+        signInWithEmailAndPassword(auth, email, pass)
+        .then((userCredential) => {
+            
+            navigate('/');
+        })
+        .catch((error) => {
+            const errorCode = error.code;
+            const errorMessage = error.message;
+        });
     }
     return (
         <>
