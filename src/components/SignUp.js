@@ -1,19 +1,30 @@
-import React, { useState,useEffect } from 'react';
+import React, { useState,useEffect,useContext } from 'react';
 
 import {Form,Link,useNavigate} from 'react-router-dom';
 import {  createUserWithEmailAndPassword } from "firebase/auth";
 import {  onAuthStateChanged } from "firebase/auth";
 import {auth,db} from './Database'
 import { collection, addDoc } from "firebase/firestore"; 
+import { redirect } from "react-router-dom";
 
-
+import authContext from "./Context";
 
 const SignUp = () => {
-
+    const {authobj,setAuthobj} = useContext(authContext);
+    
+    const navigate = useNavigate();
+    
+    useEffect(() => {
+        if(authobj)
+        {
+            console.log(authobj);
+            navigate("/");
+        }
+    }, [])
     const [email,setEmail] = useState("");
     const [pass,setPass] = useState("");
     const [name,setName] = useState("");
-    const navigate = useNavigate();
+    
     function changeEmail(e)
     {
         setEmail(e.target.value);
@@ -40,11 +51,14 @@ const SignUp = () => {
                 "name": name,
                 "email": email,
               });
+              setAuthobj(userCredential.user)
+              
               navigate('/');
         })
         .catch((error) => {
             const errorCode = error.code;
             const errorMessage = error.message;
+            console.log(error.message)
         });
     }
 

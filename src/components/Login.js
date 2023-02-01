@@ -1,16 +1,27 @@
-import React, { useState } from 'react';
+import React, { useState,useEffect,useContext } from 'react';
 
 import {Form,Link,useNavigate} from 'react-router-dom';
 import {auth} from './Database'
 import {  signInWithEmailAndPassword } from "firebase/auth";
 
-
+import authContext from "./Context";
 
 const Login = () => {
 
     const [email,setEmail] = useState("");
     const [pass,setPass] = useState("");
     const navigate = useNavigate();
+    const {authobj,setAuthobj} = useContext(authContext);
+    
+    
+    
+    useEffect(() => {
+        if(authobj)
+        {
+            console.log(authobj.uid+"rahul");
+            navigate("/");
+        }
+    }, [])
     function changeEmail(e)
     {
         setEmail(e.target.value);
@@ -25,15 +36,13 @@ const Login = () => {
     const onLogin = (e) =>
     {
         e.preventDefault();
-
-        
-
         
         signInWithEmailAndPassword(auth, email, pass)
         .then((userCredential) => {
             
-            navigate('/');
-        })
+            setAuthobj(userCredential.user)
+              
+            navigate('/');        })
         .catch((error) => {
             const errorCode = error.code;
             const errorMessage = error.message;

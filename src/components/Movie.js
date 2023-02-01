@@ -23,7 +23,7 @@ const Movie = () => {
     let movie_id = params.id;
     const [movie,setMovie] = useState({});
     console.log(movie);
-    console.log("hii");
+    
     React.useEffect(()=>{
 
         axios.get(`https://api.themoviedb.org/3/movie/${movie_id}?api_key=6180a45f8f909138bfb07757c25c1dc4&language=en-US`).then((response)=>{
