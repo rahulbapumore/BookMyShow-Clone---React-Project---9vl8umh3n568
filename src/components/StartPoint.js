@@ -8,6 +8,7 @@ import Movie from "./Movie";
 import Navbar from "./Navbar";
 import Login from "./Login";
 import SignUp from "./SignUp";
+import ErrorPage from "./ErrorPage";
 import { onAuthStateChanged } from "firebase/auth";
 
 import '@fontsource/roboto/300.css';
@@ -57,7 +58,13 @@ const AppLayout = () =>
                         element: <SignUp />,
                         
                     },
+
         ],
+    },
+    {
+        path: "/*",
+        element: <ErrorPage />,
+        
     },
 ])
 

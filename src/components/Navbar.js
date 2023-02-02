@@ -12,6 +12,8 @@ import MovieIcon from '@mui/icons-material/Movie';
 import Button from '@mui/material/Button';
 import authContext from "./Context";
 import { RouterProvider, useNavigate } from "react-router-dom";
+import {  signOut } from "firebase/auth";
+import {auth,db} from './Database'
 const Search = styled('div')(({ theme }) => ({
   position: 'relative',
   borderRadius: theme.shape.borderRadius,
@@ -58,9 +60,10 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 
 export default function SearchAppBar() {
     const {authobj,setAuthobj} = React.useContext(authContext);
-    console.log("navbar")
-    console.log(authobj?.email)
-    console.log("navbar")
+    
+
+    
+
     const navigate = useNavigate();
     const [login,setLogin] = React.useState(true);
     const goToAbout = () => {
@@ -68,6 +71,13 @@ export default function SearchAppBar() {
     }
     const changeLogin = () => {
       navigate("/login");
+    }
+    const changeLogout = () => {
+      signOut(auth).then(() => {
+      
+      }).catch((error) => {
+        console.log(error);
+      });
     }
   return (
     
@@ -96,7 +106,13 @@ export default function SearchAppBar() {
               inputProps={{ 'aria-label': 'search' }}
             />
           </Search>
-          <Button variant="outlined" onClick={changeLogin}>{login?"Login":"Logout"}</Button>
+          
+            <>{
+            !authobj?
+            <Button variant="outlined" onClick={changeLogin}>Login</Button>:
+            <Button variant="outlined" onClick={changeLogout}>Logout</Button>
+            }</>
+          
         </Toolbar>
       </AppBar>
       </Box>

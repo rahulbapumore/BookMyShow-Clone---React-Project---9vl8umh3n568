@@ -9,6 +9,7 @@ import Skeleton from '@mui/material/Skeleton';
 import StarIcon from '@mui/icons-material/Star';
 import axios from 'axios';
 import {useNavigate} from 'react-router-dom';
+import { loadingContext } from './Context';
 const Image = styled('img')({
   width: '100%',
   height: '100%',
@@ -25,7 +26,8 @@ axios.get('https://api.themoviedb.org/3/genre/movie/list?api_key=6180a45f8f90913
 
 
 function SkeletonChildrenDemo(props) {
-
+  
+  
   return (
     <div>
         
@@ -39,11 +41,15 @@ function SkeletonChildrenDemo(props) {
             </Box>
         </Box>:""
         }
-        <Image   
-            sx={{maxHeight:'100%',maxWidth:'100%;'}}
+        
+        <>
+        {!props.loading?
+        <Image 
+            
+            style={{maxHeight:'100%',maxWidth:'100%;',margin:2}}
             src={"https://image.tmdb.org/t/p/w500"+props.data.poster_path}
             alt=""
-        />
+/>:<h1>Loading image...</h1>}</>
         
         {(!(props.data?.show))?<Box sx={{  }}>
             <Box sx={{ margin: 1 }}>
@@ -64,31 +70,39 @@ function SkeletonChildrenDemo(props) {
 export default function MovieList(props) {
     const [movies,setMovies] = React.useState([]);
     const navigate = useNavigate()
-    
+    const [loading,setLoading] = React.useState(true)
     const onClickCard = (arg) => {
         navigate(`/movie/${arg.id}`,{state: arg});
       }
+    
     React.useEffect(()=>{
+      setLoading(true);
         axios.get(props.which).then((response)=>{
             setMovies(response.data.results);
+            setLoading(false);
         });
         
     },[]);
 
   return (
     <>
-    <Box sx={{ margin: 10 }}>
+
+    <Box>
+      <Box sx={{ margin: 10 }}>
       <div><h2>{props.type}</h2></div>
     </Box>
         <Grid container sx={{ display: 'flex',justifyContent: 'flex-flow',margin:6,rowGap: 15}}>
         {
             movies.map((mov,ind)=>{
                 return (<Grid item key={ind} onClick={() => onClickCard(mov)}>
-                         <SkeletonChildrenDemo  data={mov}/>
+                         <SkeletonChildrenDemo loading={loading} setLoading={setLoading} data={mov}/>
                       </Grid>)
             })   
         }
         </Grid>
+    
+        </Box>
+  
     </>
   );
 }
