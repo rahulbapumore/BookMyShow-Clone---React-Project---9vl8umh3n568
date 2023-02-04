@@ -10,6 +10,8 @@ import StarIcon from '@mui/icons-material/Star';
 import axios from 'axios';
 import {useNavigate} from 'react-router-dom';
 import { loadingContext } from './Context';
+import authContext from "./Context";
+import { authContext1 } from "./Context";
 const Image = styled('img')({
   width: '100%',
   height: '100%',
@@ -46,7 +48,7 @@ function SkeletonChildrenDemo(props) {
         {!props.loading?
         <Image 
             
-            style={{maxHeight:'100%',maxWidth:'100%;',margin:2}}
+            style={{maxHeight:'100%',maxWidth:'100%',margin:2}}
             src={"https://image.tmdb.org/t/p/w500"+props.data.poster_path}
             alt=""
 />:<h1>Loading image...</h1>}</>
@@ -71,6 +73,11 @@ export default function MovieList(props) {
     const [movies,setMovies] = React.useState([]);
     const navigate = useNavigate()
     const [loading,setLoading] = React.useState(true)
+    const {authobj,setAuthobj} = React.useContext(authContext);
+    const {authobj1,setAuthobj1} = React.useContext(authContext1);
+    console.log(authobj1)
+    console.log(authobj1.search+"  "+"hii")
+    console.log("authobj1")
     const onClickCard = (arg) => {
         navigate(`/movie/${arg.id}`,{state: arg});
       }
@@ -79,6 +86,8 @@ export default function MovieList(props) {
       setLoading(true);
         axios.get(props.which).then((response)=>{
             setMovies(response.data.results);
+            console.log(response.data);
+            setAuthobj1({...response.data,search: ''})
             setLoading(false);
         });
         
@@ -93,11 +102,35 @@ export default function MovieList(props) {
     </Box>
         <Grid container sx={{ display: 'flex',justifyContent: 'flex-flow',margin:6,rowGap: 15}}>
         {
+          authobj1.search?.toLowerCase() != ''?
             movies.map((mov,ind)=>{
+
+
+ 
+              if( mov.title?.toLowerCase().includes(authobj1.search?.toLowerCase()))
+              {
                 return (<Grid item key={ind} onClick={() => onClickCard(mov)}>
                          <SkeletonChildrenDemo loading={loading} setLoading={setLoading} data={mov}/>
                       </Grid>)
-            })   
+              }
+
+
+
+            })   :
+            movies.map((mov,ind)=>{
+
+
+ 
+
+                return (<Grid item key={ind} onClick={() => onClickCard(mov)}>
+                         <SkeletonChildrenDemo loading={loading} setLoading={setLoading} data={mov}/>
+                      </Grid>)
+
+
+
+
+            }) 
+
         }
         </Grid>
     

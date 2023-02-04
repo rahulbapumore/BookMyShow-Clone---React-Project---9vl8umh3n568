@@ -11,6 +11,7 @@ import SearchIcon from '@mui/icons-material/Search';
 import MovieIcon from '@mui/icons-material/Movie';
 import Button from '@mui/material/Button';
 import authContext from "./Context";
+import { authContext1 } from "./Context";
 import { RouterProvider, useNavigate } from "react-router-dom";
 import {  signOut } from "firebase/auth";
 import {auth,db} from './Database'
@@ -60,10 +61,14 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 
 export default function SearchAppBar() {
     const {authobj,setAuthobj} = React.useContext(authContext);
-    
+    const {authobj1,setAuthobj1} = React.useContext(authContext1);
+
 
     
-
+    const onSearch = (e) => {
+      const newobj = {...authobj1,search: e.target.value}
+      setAuthobj1(newobj);
+    }
     const navigate = useNavigate();
     const [login,setLogin] = React.useState(true);
     const goToAbout = () => {
@@ -102,6 +107,7 @@ export default function SearchAppBar() {
               <SearchIcon />
             </SearchIconWrapper>
             <StyledInputBase
+              onChange={onSearch}
               placeholder="Search…"
               inputProps={{ 'aria-label': 'search' }}
             />

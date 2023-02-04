@@ -8,6 +8,7 @@ import Movie from "./Movie";
 import Navbar from "./Navbar";
 import Login from "./Login";
 import SignUp from "./SignUp";
+import Book from "./Book";
 import ErrorPage from "./ErrorPage";
 import { onAuthStateChanged } from "firebase/auth";
 
@@ -20,6 +21,7 @@ import {auth,db} from './Database'
 import { HashRouter } from 'react-router-dom'
 import { createBrowserRouter } from "react-router-dom";
 import authContext from "./Context";
+import { authContext1 } from "./Context";
 const AppLayout = () =>
 {
     return (<>
@@ -58,6 +60,11 @@ const AppLayout = () =>
                         element: <SignUp />,
                         
                     },
+                    {
+                        path: "/book",
+                        element: <Book />,
+                        
+                    },
 
         ],
     },
@@ -72,6 +79,7 @@ const AppLayout = () =>
 const StartPoint = () => {
     
     const [authobj,setAuthobj]=useState(null);
+    const [authobj1,setAuthobj1]=useState({search: ''});
     useEffect(() => {
         const handleAuthChange = (user) => {
           if (user) {
@@ -89,11 +97,13 @@ const StartPoint = () => {
 
       
     return (
+        <authContext1.Provider value={{authobj1,setAuthobj1}}>
         <authContext.Provider value={{authobj,setAuthobj}}>
             <RouterProvider router={router} >
             
             </RouterProvider>
         </authContext.Provider>
+        </authContext1.Provider>
     )
 
 
