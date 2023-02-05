@@ -72,6 +72,7 @@ export default function SearchAppBar() {
     const navigate = useNavigate();
     const [login,setLogin] = React.useState(true);
     const goToAbout = () => {
+      setAuthobj1({...authobj1,search: ''})
         navigate("");
     }
     const changeLogin = () => {
