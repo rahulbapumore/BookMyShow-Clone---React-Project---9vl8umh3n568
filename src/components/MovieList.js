@@ -75,9 +75,7 @@ export default function MovieList(props) {
     const [loading,setLoading] = React.useState(true)
     const {authobj,setAuthobj} = React.useContext(authContext);
     const {authobj1,setAuthobj1} = React.useContext(authContext1);
-    console.log(authobj1)
-    console.log(authobj1.search+"  "+"hii")
-    console.log("authobj1")
+    
     const onClickCard = (arg) => {
         navigate(`/movie/${arg.id}`,{state: arg});
       }
@@ -86,7 +84,7 @@ export default function MovieList(props) {
       setLoading(true);
         axios.get(props.which).then((response)=>{
             setMovies(response.data.results);
-            console.log(response.data);
+            
             setAuthobj1({...response.data,search: ''})
             setLoading(false);
         });

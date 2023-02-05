@@ -7,7 +7,7 @@ const Book = () => {
     const {authobj,setAuthobj} = useContext(authContext);
     
     const params = useParams();
-    console.log(params)
+    
     
     useEffect(() => {
         if(!authobj)

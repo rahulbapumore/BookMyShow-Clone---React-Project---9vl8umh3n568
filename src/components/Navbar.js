@@ -75,13 +75,14 @@ export default function SearchAppBar() {
         navigate("");
     }
     const changeLogin = () => {
+      setAuthobj1({...authobj1,search: null});
       navigate("/login");
     }
     const changeLogout = () => {
       signOut(auth).then(() => {
       
       }).catch((error) => {
-        console.log(error);
+        
       });
     }
   return (
@@ -102,7 +103,7 @@ export default function SearchAppBar() {
            BookMyShow
           </Typography>
           
-          <Search>
+         {authobj1.search != null? <Search>
             <SearchIconWrapper>
               <SearchIcon />
             </SearchIconWrapper>
@@ -111,8 +112,8 @@ export default function SearchAppBar() {
               placeholder="Search…"
               inputProps={{ 'aria-label': 'search' }}
             />
-          </Search>
-          
+          </Search>:""
+}
             <>{
             !authobj?
             <Button variant="outlined" onClick={changeLogin}>Login</Button>:

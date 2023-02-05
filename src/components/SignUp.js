@@ -8,18 +8,22 @@ import { collection, addDoc } from "firebase/firestore";
 import { redirect } from "react-router-dom";
 
 import authContext from "./Context";
+import { authContext1 } from "./Context";
 
 const SignUp = () => {
     const {authobj,setAuthobj} = useContext(authContext);
+    const {authobj1,setAuthobj1} = useContext(authContext1);
     
     const navigate = useNavigate();
-    
+    if(authobj)
+    {
+        
+        setAuthobj1({...authobj1,search: ''})
+        navigate("/");
+    }
     useEffect(() => {
-        if(authobj)
-        {
-            console.log(authobj);
-            navigate("/");
-        }
+        setAuthobj1({...authobj1,search: null});
+
     }, [])
     const [email,setEmail] = useState("");
     const [pass,setPass] = useState("");
@@ -58,7 +62,7 @@ const SignUp = () => {
         .catch((error) => {
             const errorCode = error.code;
             const errorMessage = error.message;
-            console.log(error.message)
+            
         });
     }
 
